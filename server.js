@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 // Get our routes
 const user = require('./server/routes/user-router');
 const agenda = require('./server/routes/agenda-router');
-//const event = require('./server/routes/event-router');
+const event = require('./server/routes/event-router');
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // Set our routes
 app.use('/user', user);
 app.use('/agenda', agenda);
-//app.use('/event', event);
+app.use('/event', event);
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {

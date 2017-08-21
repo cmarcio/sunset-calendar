@@ -1,27 +1,30 @@
 const express = require('express');
 const router = express.Router();
 
-// grab the agenda model
-var Agenda = require('./../models/agenda');
+// grab the event model
+var Event = require('./../models/event');
 var User = require('./../models/user');
 
-// create agenda
+// create event
 router.post('/', (req, res) => {
-  if ( !req.query.owner || !req.query.password )
-    return res.status(500).send({error: 'missing parameters'});
+  if ( !req.query.owner || !req.query.agenda || !req.query.password )
+    return res.status(500).send({error: 'missing atributes'});
 
   // verify if the user is authenticated
   User.findOne({username: req.query.owner}, (err, user) => {
     if ( !err && user && user.validPassword(req.query.password) ) {
         // create a new agenda
-        var newAgenda = Agenda({
-            name: req.query.name,
+        var newEvent = Event({
+            agenda: req.query.agenda,
             owner: req.query.owner,
-            color: req.query.color
+            begin: req.query.begin,
+            end: req.query.end,
+            all_day: req.query.all_day,
+            name: req.query.name
         });
 
         // save the agenda
-        newAgenda.save( err => {
+        newEvent.save( err => {
             if ( err )
                 return res.status(500).send({error: err.errmsg});
             res.send('ok');
@@ -31,54 +34,60 @@ router.post('/', (req, res) => {
   });
 });
 
-// get all agendas
+// get all events
 router.get('/', (req, res) => {
   if ( !req.query.owner || !req.query.password )
-    return res.status(500).send({error: 'missing parameters'});
+    return res.status(500).send({error: 'missing atributes'});
   
   // verify if the user is authenticated
   User.findOne({username: req.query.owner}, (err, user) => {
     if ( !err && user && user.validPassword(req.query.password) ) {
-        // find agendas from owner
-        Agenda.find({ owner: user.username }, (err, agendas) => {
+        // find events from user
+        Event.find({ owner: user.username }, (err, events) => {
             if ( err ) 
                 return res.status(500).send({error: err.errmsg});
             
-            if ( !agendas ) 
-                return res.status(500).send({error: 'agendas not found'});
+            if ( !events ) 
+                return res.status(500).send({error: 'events not found'});
             
-            res.send(agendas);
+            res.send(events);
         });
     }
     else res.status(500).send({error: 'authentication failed'});
   });
 });
 
-// update agenda
+// update event
 router.put('/:id', (req, res) => {
     if ( !req.query.owner || !req.query.password )
-        return res.status(500).send({error: 'missing parameters'});
+        return res.status(500).send({error: 'missing atributes'});
       
     // verify if the user is authenticated
     User.findOne({username: req.query.owner}, (err, user) => {
         if ( !err && user && user.validPassword(req.query.password) ) {
-            // find agendas by id and update parameters
-            Agenda.findByIdAndUpdate(req.params.id, 
-                {color: req.query.color, name: req.query.name } ,(err, agenda) => {
-                if ( err ) 
-                    return res.status(500).send({error: err.errmsg});
-                
-                if ( !agenda ) 
-                    return res.status(500).send({error: 'agenda not found'});
-                
-                res.send(agenda);
-            });
+            // find events by id and update atributes
+            Event.findByIdAndUpdate(req.params.id, 
+                {
+                    name: req.query.name,
+                    begin: req.query.begin,
+                    end: req.query.end,
+                    all_day: req.query.all_day
+                }, (err, event) => {
+                    if ( err ) 
+                        return res.status(500).send({error: err.errmsg});
+                    
+                    if ( !event ) 
+                        return res.status(500).send({error: 'event not found'});
+                    
+                    res.send(event);
+                }
+            );
         }
         else res.status(500).send({error: 'authentication failed'});
     });
 });
 
-// delete agenda
+// delete event
 router.delete('/:id', (req, res) => {
     if ( !req.query.owner || !req.query.password )
         return res.status(500).send({error: 'missing parameters'});
@@ -86,8 +95,8 @@ router.delete('/:id', (req, res) => {
     // verify if the user is authenticated
     User.findOne({username: req.query.owner}, (err, user) => {
         if ( !err && user && user.validPassword(req.query.password) ) {
-            // find agendas by id and delete
-            Agenda.findByIdAndRemove(req.params.id, err => {
+            // find event by id and delete
+            Event.findByIdAndRemove(req.params.id, err => {
                 if ( err ) 
                     return res.status(500).send({error: err.errmsg});
                                 
