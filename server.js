@@ -5,14 +5,15 @@ const http = require('http');
 const bodyParser = require('body-parser');
 
 // Get our routes
-const user = require('./server/routes/user');
-const agenda = require('./server/routes/agenda');
+const user = require('./server/routes/user-router');
+const agenda = require('./server/routes/agenda-router');
+//const event = require('./server/routes/event-router');
 
 const app = express();
 
 // Parsers for POST data
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // Set our routes
 app.use('/user', user);
 app.use('/agenda', agenda);
+//app.use('/event', event);
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
