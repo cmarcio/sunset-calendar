@@ -1,9 +1,17 @@
 // grab the things we need
+var bcrypt   = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
+
 var Schema = mongoose.Schema;
+var db = mongoose.connection;
 
-mongoose.connect('mongodb://localhost/sunset-db');
+mongoose.connect('mongodb://localhost/sunset-db', { useMongoClient: true });
 
+// verify if the connection to db was successfull
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('Mongo DB connected!');
+});
 
 // create a schema
 var userSchema = new Schema({
@@ -15,14 +23,16 @@ var userSchema = new Schema({
   updated_at: Date
 });
 
-// custom method to add string to end of name
-// you can create more important methods like name validations or formatting
-// you can also do queries and find similar users 
-userSchema.methods.dudify = function() {
-    // add some stuff to the users name
-    this.name = this.name + '-dude'; 
-  
-    return this.name;
+// methods ======================
+
+// generating a hash
+userSchema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+// checking if password is valid
+userSchema.methods.validPassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
 };
 
 // on every save, add the date
@@ -36,13 +46,11 @@ userSchema.pre('save', function(next) {
     // if created_at doesn't exist, add to that field
     if (!this.created_at)
       this.created_at = currentDate;
-  
+    
     next();
 });
-  
 
-// the schema is useless so far
-// we need to create a model using it
+// create a model using it
 var User = mongoose.model('User', userSchema);
 
 // make this available to our users in our Node applications
