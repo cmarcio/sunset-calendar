@@ -4,9 +4,9 @@ const router = express.Router();
 // grab the user model
 var User = require('./../models/user');
 
-router.get('/', (req, res) => {
-  res.send('user works');
-});
+//router.get('/', (req, res) => {
+//  res.send('user works');
+//});
 
 // user signup
 router.get('/signup', (req, res) => {
@@ -49,18 +49,5 @@ router.get('/signin', (req, res) => {
     res.send('ok');
   });
 });
-
-/*/ Get all posts
-router.get('/posts', (req, res) => {
-  // Get posts from the mock api
-  // This should ideally be replaced with a service that connects to MongoDB
-  axios.get(`${API}/posts`)
-    .then(posts => {
-      res.status(200).json(posts.data);
-    })
-    .catch(error => {
-      res.status(500).send(error)
-    });
-});*/
 
 module.exports = router;

@@ -4,8 +4,9 @@ const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
 
-// Get our User routes
+// Get our routes
 const user = require('./server/routes/user');
+const agenda = require('./server/routes/agenda');
 
 const app = express();
 
@@ -16,8 +17,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Set our user routes
+// Set our routes
 app.use('/user', user);
+app.use('/agenda', agenda);
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
