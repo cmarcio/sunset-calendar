@@ -12,9 +12,10 @@ const event = require('./server/routes/event-router');
 const app = express();
 
 // allow other
-app.get('*', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Accept');
   next();
 });
 

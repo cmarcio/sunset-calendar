@@ -30,7 +30,7 @@ export class UserService {
 
   create(user: User): Promise<User> {
     const url = `${this.usersUrl}/${user.username}`;
-    return this.http.post(url, {params: { 'password': user.password, 'email': user.email }})
+    return this.http.post(url, { 'password': user.password, 'email': user.email })
       .toPromise()
       .then(res => user)
       .catch(this.handleError);

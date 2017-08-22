@@ -6,20 +6,20 @@ var User = require('./../models/user');
 
 // Create a new User (SignUp)
 router.post('/:username', (req, res) => {
-  if ( !req.query.password || !req.query.email ) // if the required filds are missing
-    return res.status(500).send({error: 'missing parameters'});
+  if ( !req.body.password || !req.body.email ) // if the required filds are missing
+    return res.status(422).send({error: 'missing parameters'});
 
   var newUser = User({
     username: req.params.username,
-    email: req.query.email,
-    name: req.query.name
+    email: req.body.email,
+    name: req.body.name
   });
-  newUser.password = newUser.generateHash(req.query.password); // hash the password
+  newUser.password = newUser.generateHash(req.body.password); // hash the password
   
   // save the user
   newUser.save( err => {
     if ( err )  
-      return res.status(500).send({error: err.errmsg});
+      return res.status(422).send({error: err.errmsg});
     
     res.send('ok');
   });
