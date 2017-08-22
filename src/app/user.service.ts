@@ -20,11 +20,19 @@ export class UserService {
                .catch(this.handleError);
   }*/
   
-  getUser(username: string, password: string ): Promise<User> {
+  get(username: string, password: string ): Promise<User> {
     const url = `${this.usersUrl}/${username}`;
     return this.http.get(url, {params: { 'password': password }})
       .toPromise()
       .then(response => response.json() as User)
+      .catch(this.handleError);
+  }
+
+  create(user: User): Promise<User> {
+    const url = `${this.usersUrl}/${user.username}`;
+    return this.http.post(url, {params: { 'password': user.password, 'email': user.email }})
+      .toPromise()
+      .then(res => user)
       .catch(this.handleError);
   }
  
@@ -33,14 +41,6 @@ export class UserService {
     return this.http.delete(url, {headers: this.headers})
       .toPromise()
       .then(() => null)
-      .catch(this.handleError);
-  }
- 
-  create(name: string): Promise<Hero> {
-    return this.http
-      .post(this.heroesUrl, JSON.stringify({name: name}), {headers: this.headers})
-      .toPromise()
-      .then(res => res.json().data as Hero)
       .catch(this.handleError);
   }
  

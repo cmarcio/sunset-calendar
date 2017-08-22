@@ -1,3 +1,47 @@
-<p>
-  signup works!
-</p>
+<div class="container">
+  <nav class="nav nav-pills justify-content-end flex-column flex-sm-row">
+      <a class="flex-sm-fill text-sm-center nav-link" routerLink="/login">Log-In</a>
+  </nav>
+  <h1>Sign-up</h1>
+  <form [formGroup]="signForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username" >Username:</label>
+      <input formControlName="username" class="form-control" />
+      <small *ngIf="signForm.get('username').hasError('required') && (submitted || signForm.get('username').touched)">
+          Username required!
+      </small><br/>
+      <label for="name" >Name:</label>
+      <input formControlName="name" class="form-control" />
+      <small *ngIf="signForm.get('name').hasError('required') && (submitted || signForm.get('name').touched)">
+          Name required!
+      </small><br/>
+      <label for="email" >E-mail:</label>
+      <input formControlName="email" class="form-control" />
+      <small *ngIf="signForm.get('email').hasError('required') && (submitted || signForm.get('email').touched)">
+          email required!
+      </small>
+      <small *ngIf="signForm.get('email').hasError('email') && (submitted || signForm.get('email').touched) ">
+          email format invalid!
+      </small><br/>
+      <label for="password" >Password:</label> 
+      <input formControlName="password" class="form-control" />
+      <small *ngIf="signForm.get('password').hasError('required') && (submitted || signForm.get('password').touched)">
+          Password required!
+      </small>
+      <small *ngIf="signForm.get('password').hasError('minlength') && (submitted || signForm.get('password').touched)">
+          Your password must have at least 6 characters!
+      </small><br/>
+      <label for="confirm_password" >Password Confirmation:</label> 
+      <input formControlName="confirm_password" class="form-control" />
+      <small *ngIf="passwordConfirming(signForm) && (submitted || signForm.get('confirm_password').touched)">
+          Passwords do not match!
+      </small><br/>
+    </div>
+    <div class="alert alert-danger" role="alert" [hidden]="!failed">
+        User already registered go to Log-in!
+    </div>  
+    <button ng-disabled="signForm.$invalid" type="submit" class="btn btn-primary">
+        Signup
+    </button>
+  </form>
+</div>

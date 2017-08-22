@@ -1,15 +1,29 @@
 <div class="container">
+  <nav class="nav nav-pills justify-content-end flex-column flex-sm-row">
+      <a class="flex-sm-fill text-sm-center nav-link" routerLink="/signup">Sign-Up</a>
+  </nav>
   <h1>Log-In</h1>
-  <div class="alert alert-danger" role="alert" [hidden]="!failed">
-      Invalid username or password!
-  </div>
-  <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label>Username:</label> <input required #username/>
-      <label>Password:</label> <input required #password/>
+      <label for="username" >Username:</label>
+      <input formControlName="username" class="form-control" />
+      <small *ngIf="loginForm.get('username').hasError('required') && (submitted || loginForm.get('username').touched)">
+          Username required!
+      </small><br/>
+      <label for="password" >Password:</label> 
+      <input formControlName="password" class="form-control" />
+      <small *ngIf="loginForm.get('password').hasError('required') && (submitted || loginForm.get('password').touched)">
+          Password required!
+      </small>
+      <small *ngIf="loginForm.get('password').hasError('minlength') && (submitted || loginForm.get('password').touched)">
+          Your password must have at least 6 characters!
+      </small><br/>
     </div>
-    <button type="submit" class="btn btn-success" (click)="login(username.value, password.value); username.value=''; password.value=''">
-        Sign in
+    <div class="alert alert-danger" role="alert" [hidden]="!failed">
+        Invalid username or password!
+    </div>
+    <button ng-disabled="loginForm.$invalid" type="submit" class="btn btn-primary">
+        Login
     </button>
   </form>
 </div> <!-- /container -->
