@@ -28,20 +28,19 @@ router.post('/:username', (req, res) => {
 // Get the user information (SignIn)
 router.get('/:username', (req, res) => {
   if ( !req.query.password )
-    return res.status(500).send({error: 'missing parameters'});
+    return res.status(422).send({error: 'missing parameters'});
   
   // find user by username
   User.findOne({ username: req.params.username }, (err, user) => {
     if ( err ) 
-      return res.status(500).send({error: err.errmsg});
+      return res.status(422).send({error: err.errmsg});
     
     if ( !user ) 
-      return res.status(500).send({error: 'User not found'});
+      return res.status(422).send({error: 'User not found'});
     
     if ( !user.validPassword(req.query.password) ) 
-      return res.status(500).send({error: 'wrong username or password'});
-    
-    res.send('ok');
+      return res.status(422).send({error: 'wrong username or password'});
+    res.send({username: user.username, email: user.email, id: user.id});
   });
 });
 

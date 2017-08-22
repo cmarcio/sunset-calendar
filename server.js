@@ -11,6 +11,13 @@ const event = require('./server/routes/event-router');
 
 const app = express();
 
+// allow other
+app.get('*', function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
