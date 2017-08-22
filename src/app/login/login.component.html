@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>Log-In</h1>
+  <div class="alert alert-danger" role="alert" [hidden]="!failed">
+      Invalid username or password!
+  </div>
+  <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <div class="form-group">
+      <label>Username:</label> <input required #username/>
+      <label>Password:</label> <input required #password/>
+    </div>
+    <button type="submit" class="btn btn-success" (click)="login(username.value, password.value); username.value=''; password.value=''">
+        Sign in
+    </button>
+  </form>
+</div> <!-- /container -->
