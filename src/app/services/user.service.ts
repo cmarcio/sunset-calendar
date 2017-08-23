@@ -3,7 +3,9 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { User } from './classes/user';
+import { User } from './../classes/user';
+
+import { AuthenticationService } from './../services/authentication.service';
 
 @Injectable()
 export class UserService {
@@ -11,7 +13,7 @@ export class UserService {
   private headers = new Headers({'Content-Type': 'application/json'});
   private usersUrl = 'http://localhost:3000/user';  // URL to web api
 
-  constructor(private http: Http) { };
+  constructor(private http: Http, private auth: AuthenticationService) { };
 
   /*getHeroes(): Promise<Hero[]> {
     return this.http.get(this.heroesUrl)
@@ -24,7 +26,9 @@ export class UserService {
     const url = `${this.usersUrl}/${username}`;
     return this.http.get(url, {params: { 'password': password }})
       .toPromise()
-      .then(response => response.json() as User)
+      .then(response => { 
+        this.auth.onLogin(username, password); // save the user credentials
+        return response.json() as User})
       .catch(this.handleError);
   }
 
@@ -32,7 +36,9 @@ export class UserService {
     const url = `${this.usersUrl}/${user.username}`;
     return this.http.post(url, { 'password': user.password, 'email': user.email })
       .toPromise()
-      .then(res => user)
+      .then(res => {
+        this.auth.onLogin(user.username, user.password); // save the user credentials
+        return user})
       .catch(this.handleError);
   }
  

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { User } from './../classes/user';
-import { UserService } from './../user.service';
+import { User } from './../../classes/user';
+import { UserService } from './../../services/user.service';
 
 
 @Component({

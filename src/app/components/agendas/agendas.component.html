@@ -1,0 +1,17 @@
+<h2>My Agendas</h2>
+<ul class="agendas">
+  <li *ngFor="let agenda of agendas"
+    [class.selected]="agenda === selectedagenda"
+    (click)="onSelect(agenda)">
+    <div class="card" [ngStyle]="{ 'border-color': agenda.color }">
+        <div class="card-body">
+            <button (click)="onDelete(agenda)" type="button" class="close" >
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <span [ngStyle]="{ 'background-color': agenda.color }" class="filled-circle"></span>
+            <strong> {{agenda.name}}</strong>
+        </div>
+    </div>
+  </li>
+</ul>
+<agenda-editor [title]="edit" [agenda]="selectedAgenda"></agenda-editor>
