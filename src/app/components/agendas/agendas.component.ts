@@ -12,7 +12,7 @@ import { AgendaService } from './../../services/agenda.service'
 export class AgendasComponent implements OnInit {
   agendas: Agenda[];
   selectedAgenda: Agenda;
-  edit: string = 'Edit Agenda:';
+  newAgenda: boolean = false;
 
   constructor(private agendaService: AgendaService) { }
 
@@ -22,6 +22,10 @@ export class AgendasComponent implements OnInit {
 
   onSelect(agenda: Agenda) {
     this.selectedAgenda = agenda;
+  }
+
+  onCreate() {
+    this.newAgenda = true;
   }
 
   ngOnInit() {

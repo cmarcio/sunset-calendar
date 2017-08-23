@@ -9,8 +9,8 @@ import { AgendaService } from './../../services/agenda.service';
   styleUrls: ['./agenda-editor.component.css']
 })
 export class AgendaEditorComponent {
-  @Input() title: string;
   @Input() agenda: Agenda;
+  title = 'Edit Agenda';
 
   constructor(private agendaService: AgendaService) { }
 
@@ -20,5 +20,9 @@ export class AgendaEditorComponent {
         .then(agenda => console.log("agenda updated"))
         .catch(err => console.log(err));
     }
+  }
+
+  onCancel() {
+    this.agenda = null;
   }
 }

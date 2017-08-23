@@ -17,6 +17,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { AppRoutingModule }     from './app-routing.module';
 import { AgendasComponent } from './components/agendas/agendas.component';
 import { AgendaEditorComponent } from './components/agenda-editor/agenda-editor.component';
+import { AgendaCreatorComponent } from './components/agenda-creator/agenda-creator.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AgendaEditorComponent } from './components/agenda-editor/agenda-editor.
     LoginComponent,
     SignupComponent,
     AgendasComponent,
-    AgendaEditorComponent
+    AgendaEditorComponent,
+    AgendaCreatorComponent
   ],
   imports: [
     BrowserModule,

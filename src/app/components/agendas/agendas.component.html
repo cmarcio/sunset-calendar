@@ -14,4 +14,6 @@
     </div>
   </li>
 </ul>
-<agenda-editor [title]="edit" [agenda]="selectedAgenda"></agenda-editor>
+<agenda-editor [agenda]="selectedAgenda"></agenda-editor>
+<button (click)="onCreate()" class="btn btn-primary">Create</button>
+<agenda-creator *ngIf="newAgenda" [(active)]="newAgenda" [agendas]="agendas"></agenda-creator>

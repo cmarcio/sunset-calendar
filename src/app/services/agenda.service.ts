@@ -24,6 +24,16 @@ export class AgendaService {
       .catch(this.handleError);
   }
 
+  create(agenda: Agenda): Promise<Agenda> {
+    const url = `${this.agendaUrl}/`;
+    return this.http
+      .post(url, { 'owner': this.auth.username(), 'password': this.auth.password(), 'color': agenda.color, 'name': agenda.name })
+      .toPromise()
+      .then(res => {return agenda})
+      .catch(this.handleError);
+  }
+ 
+
   update(agenda: Agenda): Promise<Agenda> {
     const url = `${this.agendaUrl}/${agenda._id}`;
     return this.http

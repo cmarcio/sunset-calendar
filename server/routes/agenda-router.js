@@ -7,17 +7,17 @@ var User = require('./../models/user');
 
 // create agenda
 router.post('/', (req, res) => {
-  if ( !req.query.owner || !req.query.password )
+  if ( !req.body.owner || !req.body.password )
     return res.status(422).send({error: 'missing parameters'});
 
   // verify if the user is authenticated
-  User.findOne({username: req.query.owner}, (err, user) => {
-    if ( !err && user && user.validPassword(req.query.password) ) {
+  User.findOne({username: req.body.owner}, (err, user) => {
+    if ( !err && user && user.validPassword(req.body.password) ) {
         // create a new agenda
         var newAgenda = Agenda({
-            name: req.query.name,
-            owner: req.query.owner,
-            color: req.query.color
+            name: req.body.name,
+            owner: req.body.owner,
+            color: req.body.color
         });
 
         // save the agenda
