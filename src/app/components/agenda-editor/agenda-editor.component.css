@@ -1,5 +1,10 @@
+#editBox {
+    background: #dddddd;
+    border-radius: 5px;
+    padding: 10px;
+}
+
 #colorpicker {
-    width: 100px;
     padding: .5rem .75rem;
     font-size: 1rem;
     line-height: 1.25;
@@ -9,4 +14,18 @@
 
 .form-inline {
     width: 100%;
+    margin-bottom: 5px;
+}
+
+.form-inline .form-control {
+    width: 70%;
+}
+
+.form-inline #colorpicker {
+    width: 30%;
+}
+
+#buttons {
+    display: flex;
+    justify-content: left;
 }

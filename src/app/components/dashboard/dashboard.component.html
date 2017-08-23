@@ -1,0 +1,11 @@
+<div class="container" id="sidelist">
+    <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand">{{agendaTitle}}</a>
+        <form class="form-inline">
+            <button *ngIf="!newAgenda" (click)="toggleView()" class="btn btn-outline-info my-2 my-sm-0">Add</button>
+            <button *ngIf="newAgenda" (click)="toggleView()" class="btn btn-outline-info my-2 my-sm-0">Cancel</button>
+        </form>
+    </nav>
+  <agendas *ngIf="!newAgenda"></agendas>
+  <agenda-creator *ngIf="newAgenda"></agenda-creator>
+</div>

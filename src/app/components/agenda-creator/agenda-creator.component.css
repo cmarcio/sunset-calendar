@@ -1,3 +1,14 @@
+#createBox {
+    background: #dddddd;
+    border-radius: 5px;
+    padding: 10px;
+}
+#createBox .form-control {
+    width: 70%;
+}
+#createBox #color-picker {
+    width: 30%;
+}
 #colorpicker {
     width: 100px;
     padding: .5rem .75rem;
@@ -9,4 +20,5 @@
 
 .form-inline {
     width: 100%;
+    margin-bottom: 5px;    
 }

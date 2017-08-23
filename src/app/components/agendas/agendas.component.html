@@ -1,4 +1,3 @@
-<h2>My Agendas</h2>
 <ul class="agendas">
   <li *ngFor="let agenda of agendas"
     [class.selected]="agenda === selectedagenda"
@@ -15,5 +14,3 @@
   </li>
 </ul>
 <agenda-editor [agenda]="selectedAgenda"></agenda-editor>
-<button (click)="onCreate()" class="btn btn-primary">Create</button>
-<agenda-creator *ngIf="newAgenda" [(active)]="newAgenda" [agendas]="agendas"></agenda-creator>

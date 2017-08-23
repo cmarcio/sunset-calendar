@@ -5,7 +5,7 @@ import { Agenda } from './../../classes/agenda';
 import { AgendaService } from './../../services/agenda.service'
 
 @Component({
-  selector: 'app-agendas',
+  selector: 'agendas',
   templateUrl: './agendas.component.html',
   styleUrls: ['./agendas.component.css']
 })
@@ -13,6 +13,7 @@ export class AgendasComponent implements OnInit {
   agendas: Agenda[];
   selectedAgenda: Agenda;
   newAgenda: boolean = false;
+  title = 'My agendas';
 
   constructor(private agendaService: AgendaService) { }
 

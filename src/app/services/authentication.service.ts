@@ -12,7 +12,7 @@ export class AuthenticationService {
 
   onLogin(username: string, password: string){
     this.storeCredentials(username, password);
-    this.router.navigate(['/agendas']);
+    this.router.navigate(['/dashboard']);
   }
 
   onLogout(){
